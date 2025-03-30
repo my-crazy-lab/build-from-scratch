@@ -1,0 +1,1 @@
+# My SSR based on React hydration
