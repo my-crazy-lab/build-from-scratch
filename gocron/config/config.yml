@@ -1,0 +1,25 @@
+defaults:
+  cron: '0 3 * * *'
+  envs:
+    - key: RESTIC_PASSWORD_FILE
+      value: '/secrets/.resticpwd'
+    - key: BASE_REPOSITORY
+      value: 'rclone:pcloud:Server/Backups'
+    - key: APPDATA_PATH
+      value: '/mnt/user/appdata'
+
+jobs:
+  - name: Example
+    cron: '0 5 * * 0'
+    envs:
+      - key: RESTIC_POLICY
+        value: '--keep-daily 7 --keep-weekly 5 --keep-monthly 12 --keep-yearly 75'
+    commands:
+      - command: ls -la
+      - command: sleep 1
+      - command: echo "Done!"
+      - command: sleep 1
+  - name: Another
+    cron: '0 5 * * 0'
+    commands:
+      - command: find /mnt/cache/docker/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Cache/PhotoTranscoder -name *.jpg -type f -mtime +5 -print -delete
